@@ -1,21 +1,26 @@
 package com.MeetingPlanner.calendar;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("api/calendar")
 public class CalendarController {
 
     private final CalendarService calendarService;
 
-    public CalendarController(CalendarService calendarService) {
-        this.calendarService = calendarService;
+    @GetMapping()
+    private List<Calendar> findAll(){
+        return calendarService.findAll();
     }
 
-    @GetMapping("/calendars")
-    public List<Calendar> getCalendars(){
-        return calendarService.getCalendars();
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    private Calendar setCalendar(@RequestBody Calendar calendar){
+        return calendarService.addCalendar(calendar);
     }
+
 }

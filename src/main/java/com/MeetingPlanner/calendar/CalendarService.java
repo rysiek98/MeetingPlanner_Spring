@@ -5,15 +5,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CalendarService {
 
     private final CalendarRepository calendarRepository;
 
-    public CalendarService(CalendarRepository calendarRepository) {
-        this.calendarRepository = calendarRepository;
+    public List<Calendar> findAll(){
+        return calendarRepository.findAll();
     }
 
-    public List<Calendar> getCalendars(){
-        return calendarRepository.findAll();
+    public Calendar addCalendar(Calendar calendar){
+        calendarRepository.save(calendar);
+        return calendar;
     }
 }
