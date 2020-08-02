@@ -1,4 +1,5 @@
 package com.MeetingPlanner.calendar;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +13,7 @@ public class CalendarService {
         this.calendarRepository = calendarRepository;
     }
 
-    public void addCalendar(Calendar calendar){
-
-    }
-
-    public List<Calendar> getAllCalendars(){
+    public List<Calendar> getCalendars(){
         return calendarRepository.findAll();
     }
 }

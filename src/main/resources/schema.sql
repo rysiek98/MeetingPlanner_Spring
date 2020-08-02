@@ -1,6 +1,5 @@
 CREATE TABLE Calendar (
     calendar_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    id_old VARCHAR(40) NOT NUll,
     data DATE NOT NULL,
     workBegin TIME NOT NULL,
     workEnd TIME NOT NULL

@@ -1,6 +1,7 @@
 package com.MeetingPlanner.calendar;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -11,29 +12,14 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class Calendar {
-
-    private Long id;
-    private LocalDate date;
-    private LocalTime workingBegin;
-    private LocalTime workingEnd;
-
-    public Calendar(LocalDate date) {
-        this.date = date;
-    }
-
-    public Calendar() {
-
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
-    public Long getId() {
-        return id;
-    }
+    private long calendar_id;
+    private LocalDate data;
+    private LocalTime workBegin;
+    private LocalTime workEnd;
+
 }
 
 
