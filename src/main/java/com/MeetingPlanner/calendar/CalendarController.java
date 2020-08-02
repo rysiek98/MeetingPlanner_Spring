@@ -1,8 +1,8 @@
 package com.MeetingPlanner.calendar;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,4 +23,9 @@ public class CalendarController {
         return calendarService.add(calendar);
     }
 
+   /* @PutMapping("api/calendar{id}")
+    private Calendar setCalendar( @PathVariable String id, @RequestBody Calendar calendar) {
+        return 
+    }
+    */
 }

@@ -4,7 +4,6 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
