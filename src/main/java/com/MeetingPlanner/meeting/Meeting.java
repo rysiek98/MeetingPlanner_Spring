@@ -10,17 +10,15 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 @Entity
-@Getter
-@Setter
 @RequiredArgsConstructor
 public class Meeting {
 
+    @Id
+    private Long id;
     private  LocalTime startTime;
     private  LocalTime endTime;
     private int duration;
-    @Id
-    private long id;
-    private long Meeting_id;
+
 
     public void setDuration(){
         duration = (int) Duration.between(startTime, endTime).toMinutes();
