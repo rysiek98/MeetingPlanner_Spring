@@ -1,17 +1,20 @@
 package com.MeetingPlanner.calendar;
 
 import com.MeetingPlanner.meeting.Meeting;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class Calendar {
     @Id
@@ -21,8 +24,8 @@ public class Calendar {
     private LocalTime workBegin;
     private LocalTime workEnd;
 
-    //@OneToMany
-    //private List<Meeting> meetings;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Meeting> meetings;
 
 }
 
