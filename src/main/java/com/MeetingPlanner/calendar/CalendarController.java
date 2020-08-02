@@ -20,7 +20,7 @@ public class CalendarController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     private Calendar setCalendar(@RequestBody Calendar calendar){
-        return calendarService.addCalendar(calendar);
+        return calendarService.add(calendar);
     }
 
 }

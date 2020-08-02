@@ -10,12 +10,11 @@ public class CalendarService {
 
     private final CalendarRepository calendarRepository;
 
-    public List<Calendar> findAll(){
+     List<Calendar> findAll(){
         return calendarRepository.findAll();
     }
 
-    public Calendar addCalendar(Calendar calendar){
-        calendarRepository.save(calendar);
-        return calendar;
+     Calendar add(Calendar calendar){
+        return calendarRepository.save(calendar);
     }
 }

@@ -21,8 +21,8 @@ public class Calendar {
     private LocalTime workBegin;
     private LocalTime workEnd;
 
-    @OneToMany
-    private List<Meeting> meetings;
+    //@OneToMany
+    //private List<Meeting> meetings;
 
 }
 
