@@ -24,7 +24,7 @@ public class Calendar {
     private LocalTime workBegin;
     private LocalTime workEnd;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Meeting> meetings;
 
 }
