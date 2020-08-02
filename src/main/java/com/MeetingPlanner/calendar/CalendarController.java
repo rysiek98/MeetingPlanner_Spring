@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,15 +18,25 @@ public class CalendarController {
         return calendarService.findAll();
     }
 
+    @GetMapping(path = "{id}")
+    private Optional<Calendar> findById(@PathVariable("id") long id){
+        return calendarService.findById(id);
+    }
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     private Calendar setCalendar(@RequestBody Calendar calendar){
         return calendarService.add(calendar);
     }
 
-   /* @PutMapping("api/calendar{id}")
-    private Calendar setCalendar( @PathVariable String id, @RequestBody Calendar calendar) {
-        return 
+    @PutMapping(path= "{id}")
+    private Calendar updateCalendar(@PathVariable("id") long id, @RequestBody Calendar calendar) {
+        return calendarService.updateById(id, calendar);
     }
-    */
+
+    @DeleteMapping(path= "{id}")
+    private String delete(@PathVariable("id") long id) {
+        return calendarService.deleteById(id);
+    }
+
 }
