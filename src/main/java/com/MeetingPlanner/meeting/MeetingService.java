@@ -1,8 +1,11 @@
 package com.MeetingPlanner.meeting;
 
-import com.MeetingPlanner.calendar.Calendar;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,14 +29,25 @@ public class MeetingService {
     }
 
     String deleteById(long id) {
-        if(meetingRepository.existsById(id)) {
-            meetingRepository.deleteById(id);
-            return "Delete";
+        try {
+            Meeting deleteMeeting = findById(id).orElseThrow();
+            meetingRepository.delete(deleteMeeting);
+            return "DELETED";
+        }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
         }
-        return "Not found";
     }
 
-    Meeting updateById(long id, Meeting meeting) {
-        return meetingRepository.save(meeting);
+    @Transactional
+   Meeting updateById(Meeting meeting) {
+        try {
+            Meeting updateMeeting = findById(meeting.getId()).orElseThrow();
+            updateMeeting.setStartTime(meeting.getStartTime());
+            updateMeeting.setEndTime(meeting.getEndTime());
+            return meetingRepository.save(updateMeeting);
+        }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+        }
+
     }
 }

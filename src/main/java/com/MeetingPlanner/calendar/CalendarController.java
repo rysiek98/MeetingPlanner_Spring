@@ -29,9 +29,9 @@ public class CalendarController {
         return calendarService.add(calendar);
     }
 
-    @PutMapping(path= "{id}")
-    private Calendar updateCalendar(@PathVariable("id") long id, @RequestBody Calendar calendar) {
-        return calendarService.updateById(id, calendar);
+    @PutMapping()
+    private Calendar updateCalendar(@RequestBody Calendar calendar) {
+        return calendarService.updateById(calendar);
     }
 
     @DeleteMapping(path= "{id}")

@@ -22,4 +22,27 @@ public class Meeting {
     private  LocalTime startTime;
     private  LocalTime endTime;
 
+    public Long getId() {
+        return id;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
 }

@@ -4,6 +4,8 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,6 +27,33 @@ public class Calendar {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Meeting> meetings;
 
+    public Long getId() {
+        return id;
+    }
+
+    public LocalTime getWorkBegin() {
+        return workBegin;
+    }
+
+    public LocalTime getWorkEnd() {
+        return workEnd;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setWorkBegin(LocalTime workBegin) {
+        this.workBegin = workBegin;
+    }
+
+    public void setWorkEnd(LocalTime workEnd) {
+        this.workEnd = workEnd;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
 }
 
 
