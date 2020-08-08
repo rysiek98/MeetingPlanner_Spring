@@ -52,6 +52,12 @@ public class Calendar {
     public void setData(LocalDate data) {
         this.data = data;
     }
+
+    public void countDuration(){
+        for(Meeting meeting:meetings){
+            meeting.countDuration();
+        }
+    }
 }
 
 

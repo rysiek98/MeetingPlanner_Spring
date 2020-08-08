@@ -28,7 +28,7 @@ public class MeetingService {
          }
     }
 
-     Meeting add(Meeting meeting){
+    Meeting add(Meeting meeting){
         return meetingRepository.save(meeting);
     }
 

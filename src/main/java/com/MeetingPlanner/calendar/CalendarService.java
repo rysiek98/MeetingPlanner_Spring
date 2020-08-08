@@ -27,7 +27,8 @@ public class CalendarService {
     }
 
     Calendar add(Calendar calendar){
-    return calendarRepository.save(calendar);
+        calendar.countDuration();
+        return calendarRepository.save(calendar);
     }
 
     Optional<Calendar> findById(long id) {
