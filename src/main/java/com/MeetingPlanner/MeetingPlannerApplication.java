@@ -1,3 +1,5 @@
+//Author Michal Ryszka
+
 package com.MeetingPlanner;
 
 import org.springframework.boot.SpringApplication;
