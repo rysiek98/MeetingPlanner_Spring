@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -17,7 +18,14 @@ public class MeetingService {
 
 
      List<Meeting> findAll(){
-        return meetingRepository.findAll();
+         try {
+             if(meetingRepository.findAll().isEmpty()){
+                 throw new NoSuchElementException("No value present");
+             }else
+                 return meetingRepository.findAll();
+         }catch (Exception exception){
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+         }
     }
 
      Meeting add(Meeting meeting){
@@ -25,7 +33,12 @@ public class MeetingService {
     }
 
     Optional<Meeting> findById(long id) {
-        return meetingRepository.findById(id);
+
+        try {
+            return Optional.ofNullable(meetingRepository.findById(id).orElseThrow());
+        }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+        }
     }
 
     String deleteById(long id) {

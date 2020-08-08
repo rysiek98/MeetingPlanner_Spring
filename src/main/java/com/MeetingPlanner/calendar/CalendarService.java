@@ -1,12 +1,12 @@
 package com.MeetingPlanner.calendar;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -16,7 +16,14 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
 
     List<Calendar> findAll(){
-    return calendarRepository.findAll();
+        try {
+            if(calendarRepository.findAll().isEmpty()){
+                throw new NoSuchElementException("No value present");
+            }else
+            return calendarRepository.findAll();
+        }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+        }
     }
 
     Calendar add(Calendar calendar){
@@ -24,7 +31,11 @@ public class CalendarService {
     }
 
     Optional<Calendar> findById(long id) {
-     return calendarRepository.findById(id);
+        try {
+            return Optional.ofNullable(calendarRepository.findById(id).orElseThrow());
+        }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+        }
     }
 
     String deleteById(long id) {

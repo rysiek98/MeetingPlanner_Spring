@@ -34,7 +34,7 @@ public class CalendarController {
         return calendarService.updateById(calendar);
     }
 
-    @DeleteMapping(path= "{id}")
+    @DeleteMapping(path = "{id}")
     private String delete(@PathVariable("id") long id) {
         return calendarService.deleteById(id);
     }

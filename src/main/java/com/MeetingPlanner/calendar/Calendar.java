@@ -4,8 +4,6 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
