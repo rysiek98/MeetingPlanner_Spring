@@ -51,6 +51,24 @@ public class MeetingService {
         }
     }
 
+    public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
+
+         for (int i = updateMeetings.size(); i<meetings.size(); i++){
+             meetings.remove(meetings.get(i));
+         }
+
+        for(int i = 0; i<updateMeetings.size(); i++){
+            if(i<meetings.size()) {
+                meetings.get(i).setStartTime(updateMeetings.get(i).getStartTime());
+                meetings.get(i).setEndTime(updateMeetings.get(i).getEndTime());
+            }else {
+                meetings.add(updateMeetings.get(i));
+            }
+            meetings.get(i).countDuration();
+        }
+
+    }
+
     @Transactional
     Meeting updateById(Meeting meeting) {
         try {
@@ -63,5 +81,4 @@ public class MeetingService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
         }
     }
-
 }

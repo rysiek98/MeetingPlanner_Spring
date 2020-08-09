@@ -63,14 +63,4 @@ public class Meeting {
         }
     }
 
-    public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
-
-        for(int i = 0; i<updateMeetings.size(); i++){
-            meetings.get(i).setStartTime(updateMeetings.get(i).getStartTime());
-            meetings.get(i).setEndTime(updateMeetings.get(i).getEndTime());
-            meetings.get(i).countDuration();
-        }
-
-    }
-
 }

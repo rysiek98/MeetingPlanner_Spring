@@ -3,6 +3,8 @@ package com.MeetingPlanner.calendar;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,11 @@ public class CalendarController {
     @DeleteMapping(path = "{id}")
     private String delete(@PathVariable("id") long id) {
         return calendarService.deleteById(id);
+    }
+
+    @GetMapping(value = "/newMeeting/{duration}")
+    private LocalTime planMeeting(@PathVariable LocalTime duration){
+        return duration;
     }
 
 }
