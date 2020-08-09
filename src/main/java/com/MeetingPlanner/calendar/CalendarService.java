@@ -1,5 +1,6 @@
 package com.MeetingPlanner.calendar;
 
+import com.MeetingPlanner.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CalendarService {
     }
 
     Calendar add(Calendar calendar){
-        calendar.countDuration();
+        Meeting.countDuration(calendar.getMeetings());
         return calendarRepository.save(calendar);
     }
 
@@ -58,6 +59,7 @@ public class CalendarService {
             updateCalendar.setWorkBegin(calendar.getWorkBegin());
             updateCalendar.setWorkEnd(calendar.getWorkEnd());
             updateCalendar.setData(calendar.getData());
+            Meeting.updateMeetings(updateCalendar.getMeetings(),calendar.getMeetings());
             return calendarRepository.save(updateCalendar);
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);

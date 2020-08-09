@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -54,6 +55,22 @@ public class Meeting {
 
     public void countDuration(){
         duration = (int) Duration.between(startTime, endTime).toMinutes();
+    }
+
+    public static void countDuration(List<Meeting> meetings){
+        for(Meeting meeting:meetings){
+            meeting.countDuration();
+        }
+    }
+
+    public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
+
+        for(int i = 0; i<updateMeetings.size(); i++){
+            meetings.get(i).setStartTime(updateMeetings.get(i).getStartTime());
+            meetings.get(i).setEndTime(updateMeetings.get(i).getEndTime());
+            meetings.get(i).countDuration();
+        }
+
     }
 
 }

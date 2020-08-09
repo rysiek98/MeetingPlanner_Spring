@@ -52,15 +52,16 @@ public class MeetingService {
     }
 
     @Transactional
-   Meeting updateById(Meeting meeting) {
+    Meeting updateById(Meeting meeting) {
         try {
             Meeting updateMeeting = findById(meeting.getId()).orElseThrow();
             updateMeeting.setStartTime(meeting.getStartTime());
             updateMeeting.setEndTime(meeting.getEndTime());
+            updateMeeting.countDuration();
             return meetingRepository.save(updateMeeting);
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
         }
-
     }
+
 }

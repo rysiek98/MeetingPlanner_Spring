@@ -41,6 +41,10 @@ public class Calendar {
         return data;
     }
 
+    public List<Meeting> getMeetings() {
+        return meetings;
+    }
+
     public void setWorkBegin(LocalTime workBegin) {
         this.workBegin = workBegin;
     }
@@ -53,11 +57,6 @@ public class Calendar {
         this.data = data;
     }
 
-    public void countDuration(){
-        for(Meeting meeting:meetings){
-            meeting.countDuration();
-        }
-    }
 }
 
 
