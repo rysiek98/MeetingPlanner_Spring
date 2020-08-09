@@ -15,12 +15,14 @@ public class CalendarService {
 
     private final CalendarRepository calendarRepository;
 
-    List<Calendar> findAll(){
+    List<Calendar> findAllCalendars(){
+
+        List<Calendar> calendarList = calendarRepository.findAllCalendars();
         try {
-            if(calendarRepository.findAll().isEmpty()){
+            if(calendarList.isEmpty()){
                 throw new NoSuchElementException("No value present");
             }else
-            return calendarRepository.findAll();
+            return calendarList;
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
         }

@@ -15,7 +15,7 @@ public class CalendarController {
 
     @GetMapping()
     private List<Calendar> findAll(){
-        return calendarService.findAll();
+        return calendarService.findAllCalendars();
     }
 
     @GetMapping(path = "{id}")
