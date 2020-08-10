@@ -1,5 +1,6 @@
 package com.MeetingPlanner.calendar;
 
+import com.MeetingPlanner.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +43,8 @@ public class CalendarController {
     }
 
     @GetMapping(value = "/newMeeting/{duration}")
-    private LocalTime planMeeting(@PathVariable LocalTime duration){
-        return duration;
+    private List<Meeting> planNewMeeting(@PathVariable LocalTime duration){
+        return calendarService.planNewMeeting(duration);
     }
 
 }

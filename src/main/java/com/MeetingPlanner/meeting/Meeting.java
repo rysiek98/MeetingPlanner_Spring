@@ -15,8 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
-public class Meeting {
+public class Meeting implements Comparable<Meeting> {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -24,6 +23,15 @@ public class Meeting {
     private LocalTime startTime;
     private LocalTime endTime;
     private int duration;
+
+    Meeting(){
+    }
+
+    public Meeting( LocalTime startTime, LocalTime endTime){
+        this.startTime = startTime;
+        this.endTime = endTime;
+        countDuration();
+    }
 
     public Long getId() {
         return id;
@@ -63,4 +71,8 @@ public class Meeting {
         }
     }
 
+    @Override
+    public int compareTo(Meeting o) {
+        return this.getStartTime().compareTo(o.getStartTime());
+    }
 }

@@ -1,5 +1,6 @@
 package com.MeetingPlanner.calendar;
 
+import com.MeetingPlanner.MeetingPlannerLogic;
 import com.MeetingPlanner.meeting.Meeting;
 import com.MeetingPlanner.meeting.MeetingService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -65,6 +67,11 @@ public class CalendarService {
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
         }
+
+    }
+
+    public List<Meeting> planNewMeeting(LocalTime duration) {
+       return MeetingPlannerLogic.planNewMeeting(calendarRepository.findById((long) 1).orElseThrow(), calendarRepository.findById((long) 2).orElseThrow() , duration);
 
     }
 }
