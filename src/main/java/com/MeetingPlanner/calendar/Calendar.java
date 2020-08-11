@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,8 +19,11 @@ public class Calendar {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @NotNull
     private LocalDate data;
+    @NotNull
     private LocalTime workBegin;
+    @NotNull
     private LocalTime workEnd;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

@@ -4,6 +4,9 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +30,12 @@ public class CalendarController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    private Calendar setCalendar(@RequestBody Calendar calendar){
+    private Calendar setCalendar(@Valid @NotNull @RequestBody Calendar calendar){
         return calendarService.add(calendar);
     }
 
     @PutMapping()
-    private Calendar updateCalendar(@RequestBody Calendar calendar) {
+    private Calendar updateCalendar(@Valid @NotNull @RequestBody Calendar calendar) {
         return calendarService.updateById(calendar);
     }
 
@@ -42,7 +45,7 @@ public class CalendarController {
     }
 
     @GetMapping(value = "/newMeeting/{duration}/{id1}/{id2}")
-    private List<Meeting> planNewMeeting(@PathVariable LocalTime duration,@PathVariable Long id1,@PathVariable Long id2){
+    private List<Meeting> planNewMeeting(@PathVariable LocalTime duration, @PathVariable Long id1,@PathVariable Long id2){
         System.out.println(id1);
         return calendarService.planNewMeeting(duration, id1, id2);
     }

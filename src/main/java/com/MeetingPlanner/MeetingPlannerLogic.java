@@ -9,7 +9,7 @@ import static java.util.Collections.sort;
 
 public class MeetingPlannerLogic {
 
-    public static List<Meeting> newMeetingsTime(Calendar calendar1, Calendar calendar2, int meetingDuration){
+    public static List<Meeting> newMeetingCalculate(Calendar calendar1, Calendar calendar2, int meetingDuration){
 
         List<Meeting> possibleMeetingTime = new ArrayList<>();
         List<Meeting> calendar1Meetings = countFreeTime(calendar1);
@@ -71,7 +71,6 @@ public class MeetingPlannerLogic {
         List<Meeting> freeTime = new ArrayList<>();
 
         sort(meetings);
-
         if(meetings.size() == 0){
             freeTime.add(new Meeting(calendar.getWorkBegin(), calendar.getWorkEnd()));
         }else{
@@ -93,4 +92,9 @@ public class MeetingPlannerLogic {
         return freeTime;
     }
 
+    public static List<Meeting> newMeetingTime(Calendar calendar1, Calendar calendar2, int meetingDuration){
+        if(calendar1.getData().equals(calendar2.getData())){
+            return newMeetingCalculate(calendar1,calendar2,meetingDuration);
+        }else return new ArrayList<>();
+    }
 }

@@ -71,7 +71,12 @@ public class CalendarService {
     }
 
     public List<Meeting> planNewMeeting(LocalTime duration, Long id1, Long id2) {
-       return MeetingPlannerLogic.newMeetingsTime(calendarRepository.findById(id1).orElseThrow()
+
+        try {
+            return MeetingPlannerLogic.newMeetingTime(calendarRepository.findById(id1).orElseThrow()
                ,calendarRepository.findById(id2).orElseThrow(),duration.getMinute());
+         }catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
+         }
     }
 }

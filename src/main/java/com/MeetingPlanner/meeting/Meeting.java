@@ -5,6 +5,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,11 +20,13 @@ public class Meeting implements Comparable<Meeting> {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @NotNull
     private LocalTime startTime;
+    @NotNull
     private LocalTime endTime;
     private int duration;
 
-    Meeting(){
+    protected Meeting(){
     }
 
     public Meeting(LocalTime startTime, LocalTime endTime){
