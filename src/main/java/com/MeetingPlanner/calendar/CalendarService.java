@@ -70,8 +70,9 @@ public class CalendarService {
 
     }
 
-    public List<Meeting> planNewMeeting(LocalTime duration) {
-       return MeetingPlannerLogic.planNewMeeting(calendarRepository.findById((long) 1).orElseThrow(), calendarRepository.findById((long) 2).orElseThrow() , duration);
+    public List<Meeting> planNewMeeting(LocalTime duration, Long id1, Long id2) {
+       return MeetingPlannerLogic.newMeetingsTime(calendarRepository.findById(id1).orElseThrow()
+               ,calendarRepository.findById(id2).orElseThrow(),duration.getMinute());
 
     }
 }

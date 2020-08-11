@@ -1,95 +1,94 @@
 package com.MeetingPlanner;
 
-import com.MeetingPlanner.calendar.Calendar;
 import com.MeetingPlanner.meeting.Meeting;
+import com.MeetingPlanner.calendar.Calendar;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import static java.util.Collections.sort;
 
 public class MeetingPlannerLogic {
 
-    public static List<Meeting> planNewMeeting(Calendar calendar1, Calendar calendar2, LocalTime duration) {
+    public static List<Meeting> newMeetingsTime(Calendar calendar1, Calendar calendar2, int meetingDuration){
 
-        List<Meeting> calendar1Meeting = calendar1.getMeetings();
-        List<Meeting> calendar2Meeting = calendar2.getMeetings();
-        sort(calendar1Meeting);
-        sort(calendar2Meeting);
+        List<Meeting> possibleMeetingTime = new ArrayList<>();
+        List<Meeting> calendar1Meetings = countFreeTime(calendar1);
+        List<Meeting> calendar2Meetings = countFreeTime(calendar2);
+        LocalTime startTime, endTime;
 
-        List<Meeting> possibleMeetingsTime = beforeFirstPlanedMeeting(calendar1, calendar2, calendar1Meeting, calendar2Meeting);
-        possibleMeetingsTime.addAll(betweenPlanedMeeting(calendar1, calendar2, calendar1Meeting, calendar2Meeting));
-        possibleMeetingsTime.addAll(afterPlanedMeeting(calendar1, calendar2, calendar1Meeting, calendar2Meeting));
+        for (Meeting meeting : calendar1Meetings) {
+            for (Meeting value : calendar2Meetings) {
+                if (meeting.getStartTime().isAfter(value.getStartTime()) || meeting.getStartTime().equals(value.getStartTime())) {
+                    startTime = meeting.getStartTime();
+                    endTime = meeting.getStartTime().plusMinutes(meetingDuration);
 
+                    boolean flag = false;
+                    while (condition1(meeting, value, endTime)) {
+                        endTime = endTime.plusMinutes(meetingDuration);
+                        flag = true;
+                    }
+                    if (flag) {
+                        possibleMeetingTime.add(new Meeting(startTime, endTime.minusMinutes(meetingDuration)));
+                    }
 
-        possibleMeetingsTime.removeIf(meeting -> meeting.getDuration() < duration.getMinute());
-
-        return possibleMeetingsTime;
-    }
-
-    public static List<Meeting> beforeFirstPlanedMeeting(Calendar calendar1, Calendar calendar2, List<Meeting> calendar1Meeting, List<Meeting> calendar2Meeting){
-
-        List<Meeting> possibleMeetingsTime = new ArrayList<>();
-
-        if(calendar1.getWorkBegin() != calendar1Meeting.get(0).getStartTime() && calendar2.getWorkBegin() != calendar2Meeting.get(0).getStartTime()) {
-            if (calendar1.getWorkBegin().isAfter(calendar2.getWorkBegin())) {
-                if (calendar1Meeting.get(0).getStartTime().isBefore(calendar2Meeting.get(0).getStartTime())) {
-                    possibleMeetingsTime.add(new Meeting(calendar1.getWorkBegin(), calendar1Meeting.get(0).getStartTime()));
-                } else
-                    possibleMeetingsTime.add(new Meeting( calendar1.getWorkBegin(), calendar2Meeting.get(0).getStartTime()));
-            } else {
-                if (calendar1Meeting.get(0).getStartTime().isBefore(calendar2Meeting.get(0).getStartTime())) {
-                    possibleMeetingsTime.add(new Meeting(calendar2.getWorkBegin(), calendar1Meeting.get(0).getStartTime()));
-                } else
-                    possibleMeetingsTime.add(new Meeting(calendar2.getWorkBegin(), calendar2Meeting.get(0).getStartTime()));
+                } else {
+                    startTime = value.getStartTime();
+                    endTime = value.getStartTime().plusMinutes(meetingDuration);
+                    boolean flag = false;
+                    while (condition2(meeting, value, endTime)) {
+                        endTime = endTime.plusMinutes(meetingDuration);
+                        flag = true;
+                    }
+                    if (flag) {
+                        possibleMeetingTime.add(new Meeting(startTime, endTime.minusMinutes(meetingDuration)));
+                    }
+                }
             }
         }
-        return possibleMeetingsTime;
+        return possibleMeetingTime;
     }
 
-    public static List<Meeting> betweenPlanedMeeting(Calendar calendar1, Calendar calendar2, List<Meeting> calendar1Meeting, List<Meeting> calendar2Meeting){
-
-        List<Meeting> possibleMeetingsTime = new ArrayList<>();
-
-        for(int i=0; i< calendar1Meeting.size()-1; i++){
-            LocalTime meetingStart, meetingEnd;
-            if(calendar1Meeting.get(i).getEndTime().isAfter(calendar2Meeting.get(i).getEndTime())){
-                meetingStart = calendar1Meeting.get(i).getEndTime();
-            }else {meetingStart = calendar2Meeting.get(i).getEndTime();}
-
-            if(calendar1Meeting.get(i+1).getStartTime().isBefore(calendar2Meeting.get(i+1).getStartTime())){
-                meetingEnd = calendar1Meeting.get(i+1).getStartTime();
-            }else {meetingEnd = calendar2Meeting.get(i+1).getStartTime();}
-
-            if(meetingStart.isBefore(meetingEnd)){
-                possibleMeetingsTime.add(new Meeting(meetingStart,meetingEnd));
-            }
-
-        }
-        return possibleMeetingsTime;
+    public static boolean condition1(Meeting meeting, Meeting value, LocalTime endTime){
+        return (endTime.isBefore(meeting.getEndTime()) && endTime.isBefore(value.getEndTime()) && endTime.isAfter(value.getStartTime()))
+                || (endTime.equals(meeting.getEndTime()) && endTime.isBefore(value.getEndTime()) && endTime.isAfter(value.getStartTime()))
+                || (endTime.isBefore(meeting.getEndTime()) && endTime.equals(value.getEndTime()) && endTime.isAfter(value.getStartTime()))
+                || (endTime.equals(meeting.getEndTime()) && endTime.equals(value.getEndTime()) && endTime.isAfter(value.getStartTime()));
     }
 
-    public static List<Meeting> afterPlanedMeeting(Calendar calendar1, Calendar calendar2, List<Meeting> calendar1Meeting, List<Meeting> calendar2Meeting){
+    public static boolean condition2(Meeting meeting, Meeting value, LocalTime endTime){
+        return (endTime.isBefore(meeting.getEndTime()) && endTime.isBefore(value.getEndTime()) && endTime.isAfter(meeting.getStartTime()))
+                || (endTime.equals(meeting.getEndTime()) && endTime.isBefore(value.getEndTime()) && endTime.isAfter(meeting.getStartTime()))
+                || (endTime.isBefore(meeting.getEndTime()) && endTime.equals(value.getEndTime()) && endTime.isAfter(meeting.getStartTime()))
+                || (endTime.equals(meeting.getEndTime()) && endTime.equals(value.getEndTime()) && endTime.isAfter(meeting.getStartTime()));
+    }
 
-        int c1MeetingsSize = calendar1Meeting.size()-1;
-        int c2MeetingsSize = calendar2Meeting.size()-1;
-        List<Meeting> possibleMeetingsTime = new ArrayList<>();
+    public static List<Meeting> countFreeTime(Calendar calendar){
 
-        if(calendar1.getWorkEnd() != calendar1Meeting.get(c1MeetingsSize).getEndTime()
-                && calendar2.getWorkEnd() != calendar2Meeting.get(c2MeetingsSize).getEndTime()) {
+        List<Meeting> meetings = calendar.getMeetings();
+        List<Meeting> freeTime = new ArrayList<>();
 
-            if (calendar1.getWorkEnd().isBefore(calendar2.getWorkEnd())) {
-                if (calendar1Meeting.get(c1MeetingsSize).getEndTime().isAfter(calendar2Meeting.get(c2MeetingsSize).getEndTime())) {
-                    possibleMeetingsTime.add(new Meeting(calendar1Meeting.get(c1MeetingsSize).getEndTime(), calendar1.getWorkEnd()));
-                } else
-                    possibleMeetingsTime.add(new Meeting(calendar2Meeting.get(c2MeetingsSize).getEndTime(), calendar1.getWorkEnd()));
-            } else {
-                if (calendar1Meeting.get(c1MeetingsSize).getEndTime().isAfter(calendar2Meeting.get(c2MeetingsSize).getEndTime())) {
-                    possibleMeetingsTime.add(new Meeting(calendar1Meeting.get(c1MeetingsSize).getEndTime(), calendar2.getWorkEnd()));
-                } else
-                    possibleMeetingsTime.add(new Meeting(calendar2Meeting.get(c2MeetingsSize).getEndTime(),calendar2.getWorkEnd()));
+        sort(meetings);
+
+        if(meetings.size() == 0){
+            freeTime.add(new Meeting(calendar.getWorkBegin(), calendar.getWorkEnd()));
+        }else{
+
+            if(!calendar.getWorkBegin().equals(meetings.get(0).getStartTime())){
+                freeTime.add(new Meeting(calendar.getWorkBegin(), meetings.get(0).getStartTime()));
+            }
+
+            for(int i=0; i<meetings.size()-1; i++){
+                if(!meetings.get(i).getEndTime().equals(meetings.get(i+1).getStartTime())){
+                    freeTime.add(new Meeting(meetings.get(i).getEndTime(), meetings.get(i+1).getStartTime()));
+                }
+            }
+
+            if(!calendar.getWorkEnd().equals(meetings.get(meetings.size()-1).getEndTime())){
+                freeTime.add(new Meeting((meetings.get(meetings.size()-1).getEndTime()), calendar.getWorkEnd()));
             }
         }
-        return possibleMeetingsTime;
+        return freeTime;
     }
 
 }

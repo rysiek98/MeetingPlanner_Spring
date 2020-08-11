@@ -42,9 +42,10 @@ public class CalendarController {
         return calendarService.deleteById(id);
     }
 
-    @GetMapping(value = "/newMeeting/{duration}")
-    private List<Meeting> planNewMeeting(@PathVariable LocalTime duration){
-        return calendarService.planNewMeeting(duration);
+    @GetMapping(value = "/newMeeting/{duration}/{id1}/{id2}")
+    private List<Meeting> planNewMeeting(@PathVariable LocalTime duration,@PathVariable Long id1,@PathVariable Long id2){
+        System.out.println(id1);
+        return calendarService.planNewMeeting(duration, id1, id2);
     }
 
 }
