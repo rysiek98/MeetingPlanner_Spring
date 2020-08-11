@@ -4,8 +4,9 @@ Application created in Java with Spring. MeetingPlanner use H2 inmemory database
 
 For example
 
-Calendar 1                                  
-{
+     Calendar 1
+    {
+        
         "data": "2020-08-03",
         "workBegin": "09:00:00",
         "workEnd": "20:00",
@@ -19,16 +20,16 @@ Calendar 1
                 "endTime": "13:00"
             },
             {
-              "startTime": "16:00",
-              "endTime": "18:30"  
-            }       
+                "startTime": "16:00",
+                "endTime": "18:30"
+            }
 
         ]
     }
     
     Calendar 2
     {
-        "id":1,
+        
         "data": "2020-08-03",
         "workBegin": "10:00:00",
         "workEnd": "18:30",
@@ -49,18 +50,19 @@ Duration of new meeting: 00:30
 
 Output:
 
-[
-    {
-        "id": 1,
-        "startTime": "11:30:00",
-        "endTime": "12:00:00",
-        "duration": 30
-    },
-    {
-        "id": 2,
-        "startTime": "14:30:00",
-        "endTime": "16:00:00",
-        "duration": 90
-    }
-]
+    [
+            {
+                "id":1,
+                "startTime": "11:30:00",
+                "endTime": "12:00:00",
+                "duration":30
+            },
+            {
+                "id":2,
+                "startTime": "14:30:00",
+                "endTime": "16:00:00"
+                "duration": 90
+            }
+
+    ]
 
