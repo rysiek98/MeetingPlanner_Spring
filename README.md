@@ -1,8 +1,8 @@
 # MeetingPlanner_Spring
 
-Application created in Java with Spring. MeetingPlanner use H2 inmemory database to store Calendars which users adds. Each calendar has: id (auto incremented by Hibernate), field data, fields: workingBegnin and workingEnd to store working hours and fileds to store planed meetings time. When we add to database some calendars application might calcoulate new meeting time, to do that it needs two calendars (chosen calendars by id) and duration of new meeting.
+Application created in Java with Spring. MeetingPlanner use H2 inmemory database to store Calendars which user adds. Each calendar has: id (auto incremented by Hibernate), field data, fields: workingBegnin and workingEnd to store working hours and fileds to store planed meetings time. When we add to database some calendars application might calcoulate new meeting time, to do that it needs two calendars (chosen calendars by id) and duration of new meeting.
 
-For example
+For example:
 
      Calendar 1
     {
