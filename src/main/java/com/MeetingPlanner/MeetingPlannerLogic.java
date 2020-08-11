@@ -37,6 +37,7 @@ public class MeetingPlannerLogic {
                     startTime = value.getStartTime();
                     endTime = value.getStartTime().plusMinutes(meetingDuration);
                     boolean flag = false;
+
                     while (condition2(meeting, value, endTime)) {
                         endTime = endTime.plusMinutes(meetingDuration);
                         flag = true;
