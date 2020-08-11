@@ -66,3 +66,6 @@ Output:
 
     ]
 
+Paths for Post, Put: localhost:8080/api/calendar
+for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
+to calculate new meeting use: Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
