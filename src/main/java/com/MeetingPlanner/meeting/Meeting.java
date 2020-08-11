@@ -42,10 +42,6 @@ public class Meeting implements Comparable<Meeting> {
         countDuration();
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }

@@ -1,4 +1,6 @@
-//Author Michal Ryszka
+/**
+ * Created by Michał Ryszka on 11/08/2020.
+ */
 
 package com.MeetingPlanner;
 

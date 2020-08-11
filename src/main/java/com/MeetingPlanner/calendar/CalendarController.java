@@ -4,7 +4,6 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
@@ -44,9 +43,9 @@ public class CalendarController {
         return calendarService.deleteById(id);
     }
 
+    //Methods calculate possible meeting time beetwen two calendars.
     @GetMapping(value = "/newMeeting/{duration}/{id1}/{id2}")
     private List<Meeting> planNewMeeting(@PathVariable LocalTime duration, @PathVariable Long id1,@PathVariable Long id2){
-        System.out.println(id1);
         return calendarService.planNewMeeting(duration, id1, id2);
     }
 
