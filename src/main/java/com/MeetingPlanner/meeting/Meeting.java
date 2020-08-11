@@ -58,10 +58,6 @@ public class Meeting implements Comparable<Meeting> {
         return duration;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
