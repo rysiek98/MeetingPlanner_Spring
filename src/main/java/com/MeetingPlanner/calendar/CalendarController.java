@@ -4,7 +4,6 @@ import com.MeetingPlanner.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;

@@ -5,7 +5,6 @@ import com.MeetingPlanner.calendar.Calendar;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.util.Collections.sort;
 
 public class MeetingPlannerLogic {
@@ -16,6 +15,7 @@ public class MeetingPlannerLogic {
         List<Meeting> calendar1Meetings = countFreeTime(calendar1);
         List<Meeting> calendar2Meetings = countFreeTime(calendar2);
         LocalTime startTime, endTime;
+        int iterator = 1;
 
         for (Meeting meeting : calendar1Meetings) {
             for (Meeting value : calendar2Meetings) {
@@ -29,7 +29,8 @@ public class MeetingPlannerLogic {
                         flag = true;
                     }
                     if (flag) {
-                        possibleMeetingTime.add(new Meeting(startTime, endTime.minusMinutes(meetingDuration)));
+                        possibleMeetingTime.add(new Meeting(iterator,startTime, endTime.minusMinutes(meetingDuration)));
+                        iterator++;
                     }
 
                 } else {
@@ -41,7 +42,8 @@ public class MeetingPlannerLogic {
                         flag = true;
                     }
                     if (flag) {
-                        possibleMeetingTime.add(new Meeting(startTime, endTime.minusMinutes(meetingDuration)));
+                        possibleMeetingTime.add(new Meeting(iterator,startTime, endTime.minusMinutes(meetingDuration)));
+                        iterator++;
                     }
                 }
             }

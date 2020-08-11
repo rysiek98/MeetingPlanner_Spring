@@ -1,7 +1,6 @@
 package com.MeetingPlanner.meeting;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +26,14 @@ public class Meeting implements Comparable<Meeting> {
     Meeting(){
     }
 
-    public Meeting( LocalTime startTime, LocalTime endTime){
+    public Meeting(LocalTime startTime, LocalTime endTime){
+        this.startTime = startTime;
+        this.endTime = endTime;
+        countDuration();
+    }
+
+    public Meeting(long id, LocalTime startTime, LocalTime endTime){
+        this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         countDuration();
