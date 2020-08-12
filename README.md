@@ -4,7 +4,8 @@ Application created in Java with Spring. MeetingPlanner use H2 inmemory database
 
 For example:
 
-     Calendar 1
+Calendar 1:
+     
     {
         
         "data": "2020-08-03",
@@ -27,7 +28,9 @@ For example:
         ]
     }
     
-    Calendar 2
+    
+Calendar 2:
+    
     {
         
         "data": "2020-08-03",
