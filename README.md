@@ -1,6 +1,6 @@
 # MeetingPlanner_Spring
 
-Application created in Java with Spring. MeetingPlanner use H2 inmemory database to store Calendars which user adds. Each calendar has: id (auto incremented by Hibernate), field data, fields: workingBegnin and workingEnd to store working hours and fileds to store planed meetings time. When we add to database some calendars application might calcoulate new meeting time, to do that it needs two calendars (chosen calendars by id) and duration of new meeting.
+Application created in Java with Spring. MeetingPlanner use H2 in-memory database to store Calendars which user adds. Each calendar has: id (auto incremented by Hibernate), field date, fields: workingBegnin and workingEnd to store working hours and fileds to store planed meetings time. When we add to database some calendars application might calcoulate new meeting time, to do that it needs two calendars (chosen calendars by id from database) and duration of new meeting.
 
 For example:
 
@@ -69,8 +69,10 @@ Output:
 
     ]
 
+When you run application, you can use e.g. Postman to send HTTP request to communicate with application, add date, delete, modify and calculate new meetings.  
 Paths for Post, Put: localhost:8080/api/calendar
-for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
-to calculate new meeting use: Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
+Paths for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
+Path to calculate new meeting, use Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
+
 
 Author: Michał Ryszka 11/08/20
