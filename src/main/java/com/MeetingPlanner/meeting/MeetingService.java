@@ -2,7 +2,10 @@ package com.MeetingPlanner.meeting;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 @Service
@@ -14,11 +17,11 @@ public class MeetingService {
 
     public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
 
-        if(updateMeetings.size() < meetings.size()) {
-            for (int i = meetings.size()-1; i > updateMeetings.size()-1; i--) {
-                meetings.remove(meetings.get(i));
-            }
-        }
+        Collections.reverse(meetings);
+        meetings.removeIf(meeting -> meetings.size() > updateMeetings.size());
+        Collections.reverse(meetings);
+
+
         for(int i = 0; i < updateMeetings.size(); i++){
             if(i<meetings.size()) {
                 meetings.get(i).setStartTime(updateMeetings.get(i).getStartTime());

@@ -10,7 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -21,15 +20,7 @@ public class CalendarService {
 
     List<Calendar> findAllCalendars(){
 
-        List<Calendar> calendarList = calendarRepository.findAllCalendars();
-        try {
-            if(calendarList.isEmpty()){
-                throw new NoSuchElementException("No value present");
-            }else
-            return calendarList;
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
-        }
+        return Optional.ofNullable(calendarRepository.findAll()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     Calendar add(Calendar calendar){
@@ -38,45 +29,30 @@ public class CalendarService {
     }
 
     Optional<Calendar> findById(long id) {
-        try {
-            return Optional.ofNullable(calendarRepository.findById(id).orElseThrow());
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
-        }
+
+       return Optional.ofNullable(calendarRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     String deleteById(long id) {
-        try {
-            Calendar deleteCalendar = findById(id).orElseThrow();
-            calendarRepository.delete(deleteCalendar);
+            calendarRepository.delete(findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
             return "DELETED";
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
-        }
     }
 
     @Transactional
     Calendar updateById(Calendar calendar) {
-        try {
-            Calendar updateCalendar = findById(calendar.getId()).orElseThrow();
+
+            Calendar updateCalendar = findById(calendar.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             updateCalendar.setWorkBegin(calendar.getWorkBegin());
             updateCalendar.setWorkEnd(calendar.getWorkEnd());
             updateCalendar.setData(calendar.getData());
             MeetingService.updateMeetings(updateCalendar.getMeetings(),calendar.getMeetings());
             return calendarRepository.save(updateCalendar);
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
-        }
 
     }
 
     public List<Meeting> planNewMeeting(LocalTime duration, Long id1, Long id2) {
 
-        try {
-            return MeetingPlannerLogic.newMeetingTime(calendarRepository.findById(id1).orElseThrow()
-               ,calendarRepository.findById(id2).orElseThrow(),duration.getMinute());
-         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found", exception);
-         }
+        return MeetingPlannerLogic.newMeetingTime(calendarRepository.findById(id1).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+           ,calendarRepository.findById(id2).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)), duration.getMinute());
     }
 }
