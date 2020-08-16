@@ -42,26 +42,6 @@ public class Meeting implements Comparable<Meeting> {
         countDuration();
     }
 
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
     public void countDuration(){
         duration = (int) Duration.between(startTime, endTime).toMinutes();
     }

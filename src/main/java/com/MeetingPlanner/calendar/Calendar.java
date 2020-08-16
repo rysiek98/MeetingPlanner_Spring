@@ -26,40 +26,8 @@ public class Calendar {
     @NotNull
     private LocalTime workEnd;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Meeting> meetings;
-
-    public Long getId() {
-        return id;
-    }
-
-    public LocalTime getWorkBegin() {
-        return workBegin;
-    }
-
-    public LocalTime getWorkEnd() {
-        return workEnd;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public List<Meeting> getMeetings() {
-        return meetings;
-    }
-
-    public void setWorkBegin(LocalTime workBegin) {
-        this.workBegin = workBegin;
-    }
-
-    public void setWorkEnd(LocalTime workEnd) {
-        this.workEnd = workEnd;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
 
 }
 
