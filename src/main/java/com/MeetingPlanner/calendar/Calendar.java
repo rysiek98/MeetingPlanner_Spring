@@ -25,7 +25,6 @@ public class Calendar {
     private LocalTime workBegin;
     @NotNull
     private LocalTime workEnd;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Meeting> meetings;
 

@@ -22,28 +22,32 @@ public class CalendarService {
     }
 
     Calendar add(Calendar calendar){
+
         countDuration(calendar.getMeetings());
         return calendarRepository.save(calendar);
     }
 
     Calendar findById(long id) {
-       return calendarRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return calendarRepository.findById(id)
+               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     String deleteById(long id) {
-            calendarRepository.delete(findById(id));
-            return "DELETED";
+
+        calendarRepository.delete(findById(id));
+        return "DELETED";
     }
 
     @Transactional
     Calendar updateById(Calendar calendar) {
 
-            Calendar updateCalendar = findById(calendar.getId());
-            updateCalendar.setWorkBegin(calendar.getWorkBegin());
-            updateCalendar.setWorkEnd(calendar.getWorkEnd());
-            updateCalendar.setDate(calendar.getDate());
-            updateMeetings(updateCalendar.getMeetings(),calendar.getMeetings());
-            return calendarRepository.save(updateCalendar);
+        Calendar updateCalendar = findById(calendar.getId());
+        updateCalendar.setWorkBegin(calendar.getWorkBegin());
+        updateCalendar.setWorkEnd(calendar.getWorkEnd());
+        updateCalendar.setDate(calendar.getDate());
+        updateMeetings(updateCalendar.getMeetings(),calendar.getMeetings());
+        return calendarRepository.save(updateCalendar);
 
     }
 
@@ -54,4 +58,5 @@ public class CalendarService {
                 ,findById(id2)
                 ,duration.getMinute());
     }
+
 }

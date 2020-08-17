@@ -15,14 +15,12 @@ import static java.util.Collections.sort;
 @RequiredArgsConstructor
 public class MeetingService {
 
-    private final MeetingRepository meetingRepository;
-
     public static void removeRedundantMeetings(List<Meeting> meetings, List<Meeting> updateMeetings){
+
         Collections.reverse(meetings);
         meetings.removeIf(meeting -> meetings.size() > updateMeetings.size());
         Collections.reverse(meetings);
     }
-
 
     public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
 
@@ -37,9 +35,7 @@ public class MeetingService {
             }
             meetings.get(updateMeetings.indexOf(meeting)).countDuration();
         });
-
     }
-
 
     public static boolean newMeetingCalculateCondition(Meeting meeting
             ,Meeting meetingCalendar, int meetingDuration){
@@ -50,21 +46,17 @@ public class MeetingService {
                 || newMeetingEndTime.equals(meetingCalendar.getMeetingBegin());
     }
 
-
     public static List<Meeting> matchMeetingsByDuration(Calendar calendar, int meetingDuration){
         return countFreeTime(calendar).stream()
                 .filter(meeting -> meeting.getMeetingDuration() >= meetingDuration).collect(Collectors.toList());
     }
 
-
     public static List<Meeting> newMeetingCalculate(Calendar calendar1, Calendar calendar2, int meetingDuration){
 
         List<Meeting> possibleMeetingTime = new ArrayList<>();
         int index = 1;
-
         List<Meeting> calendar1Meetings = matchMeetingsByDuration(calendar1, meetingDuration);
         List<Meeting> calendar2Meetings = matchMeetingsByDuration(calendar2, meetingDuration);
-
 
         for(Meeting meetingCalendar1 : calendar1Meetings) {
             for (Meeting meetingCalendar2 : calendar2Meetings) {

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.List;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/calendar")

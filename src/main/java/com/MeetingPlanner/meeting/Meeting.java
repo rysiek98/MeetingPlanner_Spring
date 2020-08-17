@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -30,12 +29,14 @@ public class Meeting implements Comparable<Meeting> {
     }
 
     public Meeting(LocalTime meetingBegin, LocalTime meetingEnd){
+
         this.meetingBegin = meetingBegin;
         this.meetingEnd = meetingEnd;
         countDuration();
     }
 
     public Meeting(long id, LocalTime meetingBegin, LocalTime meetingEnd){
+
         this.id = id;
         this.meetingBegin = meetingBegin;
         this.meetingEnd = meetingEnd;
@@ -47,6 +48,7 @@ public class Meeting implements Comparable<Meeting> {
     }
 
     public static void countDuration(List<Meeting> meetings){
+
         meetings.forEach(meeting -> meeting.countDuration());
     }
 
