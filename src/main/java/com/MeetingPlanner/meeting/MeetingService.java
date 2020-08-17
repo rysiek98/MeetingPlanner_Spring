@@ -17,20 +17,21 @@ public class MeetingService {
 
     private final MeetingRepository meetingRepository;
 
-    public static void removeMeetings(List<Meeting> meetings,List<Meeting> updateMeetings){
+    public static void removeRedundantMeetings(List<Meeting> meetings, List<Meeting> updateMeetings){
         Collections.reverse(meetings);
         meetings.removeIf(meeting -> meetings.size() > updateMeetings.size());
         Collections.reverse(meetings);
     }
 
+
     public static void updateMeetings(List<Meeting> meetings,List<Meeting> updateMeetings) {
 
-        removeMeetings(meetings, updateMeetings);
+        removeRedundantMeetings(meetings, updateMeetings);
 
-        updateMeetings.stream().forEach(meeting -> {
+        updateMeetings.forEach(meeting -> {
             if (updateMeetings.indexOf(meeting) < meetings.size()) {
-                meetings.get(updateMeetings.indexOf(meeting)).setStartTime(meeting.getStartTime());
-                meetings.get(updateMeetings.indexOf(meeting)).setEndTime(meeting.getEndTime());
+                meetings.get(updateMeetings.indexOf(meeting)).setMeetingBegin(meeting.getMeetingBegin());
+                meetings.get(updateMeetings.indexOf(meeting)).setMeetingEnd(meeting.getMeetingEnd());
             } else {
                 meetings.add(meeting);
             }
@@ -39,54 +40,56 @@ public class MeetingService {
 
     }
 
+
     public static boolean newMeetingCalculateCondition(Meeting meeting
             ,Meeting meetingCalendar, int meetingDuration){
 
-        LocalTime newMeetingEndTime = meeting.getEndTime().minusMinutes(meetingDuration);
+        LocalTime newMeetingEndTime = meeting.getMeetingEnd().minusMinutes(meetingDuration);
 
-        if(newMeetingEndTime.isAfter(meetingCalendar.getStartTime())
-                || newMeetingEndTime.equals(meetingCalendar.getStartTime())){
-            return true;
-        }
-        else return false;
+        return newMeetingEndTime.isAfter(meetingCalendar.getMeetingBegin())
+                || newMeetingEndTime.equals(meetingCalendar.getMeetingBegin());
     }
+
+
+    public static List<Meeting> matchMeetingsByDuration(Calendar calendar, int meetingDuration){
+        return countFreeTime(calendar).stream()
+                .filter(meeting -> meeting.getMeetingDuration() >= meetingDuration).collect(Collectors.toList());
+    }
+
 
     public static List<Meeting> newMeetingCalculate(Calendar calendar1, Calendar calendar2, int meetingDuration){
 
         List<Meeting> possibleMeetingTime = new ArrayList<>();
-        int iterator = 1;
+        int index = 1;
 
-        List<Meeting> calendar1Meetings = countFreeTime(calendar1).stream()
-                .filter(meeting -> meeting.getDuration() >= meetingDuration).collect(Collectors.toList());
-
-        List<Meeting> calendar2Meetings = countFreeTime(calendar2).stream()
-                .filter(meeting -> meeting.getDuration() >= meetingDuration).collect(Collectors.toList());
+        List<Meeting> calendar1Meetings = matchMeetingsByDuration(calendar1, meetingDuration);
+        List<Meeting> calendar2Meetings = matchMeetingsByDuration(calendar2, meetingDuration);
 
 
         for(Meeting meetingCalendar1 : calendar1Meetings) {
             for (Meeting meetingCalendar2 : calendar2Meetings) {
 
-                if(meetingCalendar1.getStartTime().isBefore(meetingCalendar2.getStartTime())
-                        || meetingCalendar1.getStartTime().equals(meetingCalendar2.getStartTime())){
+                if(meetingCalendar1.getMeetingBegin().isBefore(meetingCalendar2.getMeetingBegin())
+                        || meetingCalendar1.getMeetingBegin().equals(meetingCalendar2.getMeetingBegin())){
 
                     if(newMeetingCalculateCondition(meetingCalendar1
                             ,meetingCalendar2 ,meetingDuration)){
 
                         possibleMeetingTime.add(new Meeting(
-                                iterator
-                                ,meetingCalendar2.getStartTime()
-                                ,meetingCalendar1.getEndTime()));
-                        iterator++;
+                                index
+                                ,meetingCalendar2.getMeetingBegin()
+                                ,meetingCalendar1.getMeetingEnd()));
+                        index++;
                     }
                 }else {
                     if(newMeetingCalculateCondition(meetingCalendar2
                             ,meetingCalendar1 ,meetingDuration)){
 
                         possibleMeetingTime.add(new Meeting(
-                                iterator
-                                ,meetingCalendar1.getStartTime()
-                                ,meetingCalendar2.getEndTime()));
-                        iterator++;
+                                index
+                                ,meetingCalendar1.getMeetingBegin()
+                                ,meetingCalendar2.getMeetingEnd()));
+                        index++;
                     }
                 }
             }
@@ -102,23 +105,21 @@ public class MeetingService {
 
         sort(meetings);
 
-        if(meetings.size() == 0){
+        if(meetings.isEmpty()){
             freeTime.add(new Meeting(calendar.getWorkBegin(), calendar.getWorkEnd()));
         }else{
-
-            if(!calendar.getWorkBegin().equals(meetings.get(0).getStartTime())){
-                freeTime.add(new Meeting(calendar.getWorkBegin(), meetings.get(0).getStartTime()));
+            if(!calendar.getWorkBegin().equals(meetings.get(0).getMeetingBegin())){
+                freeTime.add(new Meeting(calendar.getWorkBegin(), meetings.get(0).getMeetingBegin()));
             }
 
             for(int i=0; i<meetings.size()-1; i++){
-                if(!meetings.get(i).getEndTime().equals(meetings.get(i+1).getStartTime())){
-                    freeTime.add(new Meeting(meetings.get(i).getEndTime(), meetings.get(i+1).getStartTime()));
+                if(!meetings.get(i).getMeetingEnd().equals(meetings.get(i+1).getMeetingBegin())){
+                    freeTime.add(new Meeting(meetings.get(i).getMeetingEnd(), meetings.get(i+1).getMeetingBegin()));
                 }
-                
             }
 
-            if(!calendar.getWorkEnd().equals(meetings.get(meetings.size()-1).getEndTime())){
-                freeTime.add(new Meeting((meetings.get(meetings.size()-1).getEndTime()), calendar.getWorkEnd()));
+            if(!calendar.getWorkEnd().equals(meetings.get(meetings.size()-1).getMeetingEnd())){
+                freeTime.add(new Meeting((meetings.get(meetings.size()-1).getMeetingEnd()), calendar.getWorkEnd()));
             }
         }
         return freeTime;
@@ -126,7 +127,7 @@ public class MeetingService {
 
     public static List<Meeting> newMeetingTime(Calendar calendar1, Calendar calendar2, int meetingDuration){
 
-        if(calendar1.getData().equals(calendar2.getData())){
+        if(calendar1.getDate().equals(calendar2.getDate())){
             return newMeetingCalculate(calendar1,calendar2,meetingDuration);
         }else return new ArrayList<>();
     }

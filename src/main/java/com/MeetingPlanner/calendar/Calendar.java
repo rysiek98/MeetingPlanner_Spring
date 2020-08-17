@@ -20,7 +20,7 @@ public class Calendar {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @NotNull
-    private LocalDate data;
+    private LocalDate date;
     @NotNull
     private LocalTime workBegin;
     @NotNull

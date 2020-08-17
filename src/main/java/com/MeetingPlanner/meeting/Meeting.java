@@ -21,39 +21,37 @@ public class Meeting implements Comparable<Meeting> {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @NotNull
-    private LocalTime startTime;
+    private LocalTime meetingBegin;
     @NotNull
-    private LocalTime endTime;
-    private int duration;
+    private LocalTime meetingEnd;
+    private int meetingDuration;
 
     protected Meeting(){
     }
 
-    public Meeting(LocalTime startTime, LocalTime endTime){
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Meeting(LocalTime meetingBegin, LocalTime meetingEnd){
+        this.meetingBegin = meetingBegin;
+        this.meetingEnd = meetingEnd;
         countDuration();
     }
 
-    public Meeting(long id, LocalTime startTime, LocalTime endTime){
+    public Meeting(long id, LocalTime meetingBegin, LocalTime meetingEnd){
         this.id = id;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.meetingBegin = meetingBegin;
+        this.meetingEnd = meetingEnd;
         countDuration();
     }
 
     public void countDuration(){
-        duration = (int) Duration.between(startTime, endTime).toMinutes();
+        meetingDuration = (int) Duration.between(meetingBegin, meetingEnd).toMinutes();
     }
 
     public static void countDuration(List<Meeting> meetings){
-        for(Meeting meeting:meetings){
-            meeting.countDuration();
-        }
+        meetings.forEach(meeting -> meeting.countDuration());
     }
 
     @Override
     public int compareTo(Meeting o) {
-        return this.getStartTime().compareTo(o.getStartTime());
+        return this.getMeetingBegin().compareTo(o.meetingBegin);
     }
 }
