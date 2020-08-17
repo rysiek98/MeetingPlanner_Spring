@@ -8,21 +8,21 @@ Calendar 1:
      
     {
         
-        "data": "2020-08-03",
+        "date": "2020-08-03",
         "workBegin": "09:00:00",
         "workEnd": "20:00",
         "meetings": [
             {
-                "startTime": "09:00",
-                "endTime": "10:30"
+                "meetingBegin": "09:00",
+                "meetingEnd": "10:30"
             },
             {
-                "startTime": "12:00",
-                "endTime": "13:00"
+                "meetingBegin": "12:00",
+                "meetingEnd": "13:00"
             },
             {
-                "startTime": "16:00",
-                "endTime": "18:30"
+                "meetingBegin": "16:00",
+                "meetingEnd": "18:30"
             }
 
         ]
@@ -33,17 +33,17 @@ Calendar 2:
     
     {
         
-        "data": "2020-08-03",
+        "date": "2020-08-03",
         "workBegin": "10:00:00",
         "workEnd": "18:30",
         "meetings": [
             {
-                "startTime": "10:00",
-                "endTime": "11:30"
+                "meetingBegin": "10:00",
+                "meetingEnd": "11:30"
             },
             {
-                "startTime": "12:30",
-                "endTime": "14:30"
+                "meetingBegin": "12:30",
+                "meetingEnd": "14:30"
             }
 
         ]
@@ -56,15 +56,15 @@ Output:
     [
             {
                 "id":1,
-                "startTime": "11:30:00",
-                "endTime": "12:00:00",
-                "duration":30
+                "meetingBegin": "11:30:00",
+                "meetingEnd": "12:00:00",
+                "meetingDuration":30
             },
             {
                 "id":2,
-                "startTime": "14:30:00",
-                "endTime": "16:00:00"
-                "duration": 90
+                "meetingBegin": "14:30:00",
+                "meetingEnd": "16:00:00"
+                "meetingDuration": 90
             }
 
     ]
