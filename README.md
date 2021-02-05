@@ -75,4 +75,4 @@ Paths for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
 Path to calculate new meeting, use Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
 
 
-Author: Michał Ryszka 11/08/20
+Created by: Michał Ryszka, 2020
