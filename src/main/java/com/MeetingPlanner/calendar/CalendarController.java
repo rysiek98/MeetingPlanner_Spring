@@ -42,7 +42,7 @@ public class CalendarController {
         return calendarService.deleteById(id);
     }
 
-    //Methods calculate possible meeting time beetwen two calendars.
+    //Methods calculate possible meeting time between two calendars.
     @GetMapping(value = "/newMeeting/{duration}/{id1}/{id2}")
     private List<Meeting> planNewMeeting(@PathVariable LocalTime duration, @PathVariable Long id1,@PathVariable Long id2){
         return calendarService.planNewMeeting(duration, id1, id2);

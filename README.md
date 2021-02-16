@@ -2,8 +2,14 @@
 
 Application created in Java with Spring. MeetingPlanner use H2 in-memory database to store Calendars which user adds. Each calendar has: id (auto incremented by Hibernate), field date, fields: workingBegnin and workingEnd to store working hours and fileds to store planed meetings time. When we add to database some calendars application might calculate new meeting time, to do that it needs two calendars (chosen calendars by id from database) and duration of new meeting.
 
+When you run application, you can use e.g. Postman to send HTTP request to communicate with application, add date, delete, modify and calculate new meetings.  
+Paths for Post, Put: localhost:8080/api/calendar
+Paths for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
+Path to calculate new meeting, use Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
+
 For example:
 
+To add new calendar use POST method and path: localhost:8080/api/calendar
 Calendar 1:
      
     {
@@ -49,7 +55,11 @@ Calendar 2:
         ]
     }
 
-Duration of new meeting: 00:30
+
+If you want to compute possible meetings time use GET method and path:
+localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
+For example if we are looking for new meeting which duration is 30 minutes, for Calendar 1 and Calendar 2
+path will be: localhost:8080/api/calendar/newMeeting/00:30/1/2
 
 Output:
 
@@ -68,11 +78,5 @@ Output:
             }
 
     ]
-
-When you run application, you can use e.g. Postman to send HTTP request to communicate with application, add date, delete, modify and calculate new meetings.  
-Paths for Post, Put: localhost:8080/api/calendar
-Paths for Get by id, and Delete: localhost:8080/api/calendar/"chosen id"
-Path to calculate new meeting, use Get and path localhost:8080/api/calendar/newMeeting/"duration"/"id1"/"id2"
-
 
 Author: Michał Ryszka 11/08/20
